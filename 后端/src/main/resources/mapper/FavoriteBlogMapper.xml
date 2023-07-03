@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.preschool.dao.FavoriteBlogMapper">
+    <select id="getFavoriteBolgDetailedByUserId" resultType="favoriteBlogDiscussPostUser">
+        select favorite_blog.*,title,content,btype,subject,username
+        from preschool.favorite_blog,preschool.discuss_post,preschool.user
+        where favorite_blog.discussPostId = discuss_post.id and favorite_blog.userId = user.id and favorite_blog.userId = #{userId}
+    </select>
+</mapper>

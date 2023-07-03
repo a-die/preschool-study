@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.preschool.dao.DiscussPostMapper">
+    <select id="queryByBtype" parameterType="int" resultType="discussPostUser">
+        select preschool.discuss_post.*,username
+        from preschool.discuss_post,preschool.user
+        where btype=#{btype} and identify = 0 and discuss_post.user_id = user.id;
+    </select>
+    <select id="queryBySubjectAndBtype" resultType="discussPostUser">
+        select preschool.discuss_post.*,username
+        from preschool.discuss_post,preschool.user
+        where subject=#{subject} and btype=#{btype} and identify = 0 and discuss_post.user_id = user.id;
+    </select>
+    <select id="getDiscussPostByColumnId" resultType="discussPostUser">
+        select preschool.discuss_post.*,username
+        from preschool.discuss_post,preschool.user
+        where column_id = #{columnId} and identify = 0 and discuss_post.user_id = user.id;
+    </select>
+
+    <insert id="addDiscussPost" parameterType="discussPost">
+        insert into preschool.discuss_post(user_id,title,content,type,status,create_time,comment_count,up_count,btype,subject,column_id)
+        values(#{user_id},#{title},#{content},#{type},#{status},#{create_time},#{comment_count},#{up_count},#{btype},#{subject},#{column_id});
+    </insert>
+    <select id="queryById" parameterType="int" resultType="discussPostUser">
+        select preschool.discuss_post.*,username,user.url as userUrl
+        from preschool.discuss_post,preschool.user
+        where discuss_post.id=#{id} and user_id = user.id;
+    </select>
+    <update id="updateOnePost" parameterType="discussPost">
+        update preschool.discuss_post set title=#{title},content=#{content},type=#{type},status=#{status},create_time=#{create_time},up_count=#{up_count},comment_count=#{comment_count} where id=#{id};
+    </update>
+    <delete id="deleteOnePost" parameterType="Integer">
+        delete from preschool.discuss_post where id=#{id};
+    </delete>
+    <select id="queryByUserId" parameterType="int" resultType="discussPost">
+        select * from preschool.discuss_post where user_id=#{user_id} and identify = #{identify};
+    </select>
+    <select id="queryByUserIdAndBtype" resultType="discussPost">
+        select * from preschool.discuss_post where user_id=#{user_id} and btype=#{btype};
+    </select>
+    <delete id="deleteUserAllPosts" parameterType="Integer">
+        delete from preschool.discuss_post where user_id=#{user_id};
+    </delete>
+    <delete id="deleteUserSomePosts" parameterType="Integer">
+        delete from preschool.discuss_post where user_id=#{user_id} and btype=#{btype};
+    </delete>
+
+
+    <update id="addPostToColumn" parameterType="Integer">
+        update preschool.discuss_post set column_id=#{column_id} where id=#{id};
+    </update>
+
+
+    <update id="updateByColumnId" parameterType="Integer">
+        update preschool.discuss_post set column_id=-1 where column_id=#{column_id};
+    </update>
+
+    <select id="getBlogByIdentify" resultType="java.util.HashMap">
+        select discuss_post.id,username,title,content,discuss_post.type,discuss_post.status,comment_count,up_count,btype,subject,column_id,discuss_post.create_time,identify,name
+        from preschool.user,preschool.discuss_post,preschool.subject
+        where user.id = discuss_post.user_id and identify = #{identify} and subject.id = discuss_post.subject
+    </select>
+
+    <select id="getNotAuditNum" resultType="Integer">
+        select count(*) from preschool.discuss_post where identify = #{identify}
+    </select>
+
+    <select id="getDiscussPostListByTitle" resultType="java.util.HashMap">
+        select discuss_post.id,username,title,content,discuss_post.type,discuss_post.status,comment_count,up_count,btype,subject,column_id,discuss_post.create_time,identify,name
+        from preschool.user,preschool.discuss_post,preschool.subject
+        where user.id = discuss_post.user_id and identify = #{identify} and title like concat('%',#{title},'%') and subject.id = discuss_post.subject
+    </select>
+    <select id="queryBySubject" parameterType="Integer" resultType="Integer">
+        select count(*) from preschool.discuss_post where subject=#{subject};
+    </select>
+    <select id="queryCountByUserId" parameterType="Integer" resultType="Integer">
+        select count(*) from preschool.discuss_post where user_id=#{user_id};
+    </select>
+    <select id="queryCountPerMonth" resultType="countpermonth">
+        SELECT DATE_FORMAT(create_time,'%Y-%c') AS date, COUNT(DATE_FORMAT(create_time,'%Y-%c')) AS count FROM preschool.discuss_post GROUP BY DATE_FORMAT(create_time,'%Y-%c');
+    </select>
+    <select id="getDiscussPostNum" resultType="Integer">
+        select count(*) from preschool.discuss_post;
+    </select>
+    <select id="queryCountByBtype" resultType="Integer">
+        select count(*) from preschool.discuss_post where btype=#{btype};
+    </select>
+    <select id="queryCommentNumByBtype" parameterType="Integer" resultType="Integer">
+        SELECT COUNT(*)
+        FROM preschool.discuss_post d,preschool.COMMENT c
+        WHERE d.id=c.discussPostId AND d.btype=#{btype}
+    </select>
+    <select id="queryReplyNumByBtype" parameterType="Integer" resultType="Integer">
+        SELECT COUNT(*)
+        FROM preschool.discuss_post d,preschool.COMMENT c,preschool.comment_reply r
+        WHERE d.id=c.discussPostId AND c.id=r.comment_id AND d.btype=#{btype}
+    </select>
+
+    <select id="getBlogNumByUserId" parameterType="Integer" resultType="Integer">
+        select COUNT(*)
+        from preschool.discuss_post
+        where user_id = #{userId} and identify = 0
+    </select>
+</mapper>

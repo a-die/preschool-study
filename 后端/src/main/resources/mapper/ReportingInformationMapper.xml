@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.preschool.dao.ReportingInformationMapper">
+    <select id="getAllReportingInformation" resultType="java.util.Map">
+        select reportReason,reporting_information.createTime,reportInformation,processStatus,reporting_information.id,username,discuss_post.url,reportIdTo,reportIdFrom,title,content
+        from preschool.user,preschool.discuss_post,preschool.reporting_information
+        where user.id = reporting_information.reportIdFrom and discuss_post.id = reporting_information.reportIdTo
+    </select>
+
+    <select id="getReportingNum" resultType="Integer">
+        select count(*) from preschool.reporting_information
+    </select>
+
+    <select id="getReportingInformationByReportReason" resultType="java.util.Map">
+        select reportReason,reporting_information.createTime,reportInformation,processStatus,reporting_information.id,username,discuss_post.url,reportIdTo,reportIdFrom,title,content
+        from preschool.user,preschool.discuss_post,preschool.reporting_information
+        where user.id = reporting_information.reportIdFrom and discuss_post.id = reporting_information.reportIdTo and reportReason = #{reportReason}
+    </select>
+
+    <select id="getReportingNumByProcessStatus" resultType="Integer">
+        select count(*) from preschool.reporting_information where processStatus = #{processStatus}
+    </select>
+
+    <select id="getAllReportingInformationByProcessStatus" resultType="java.util.Map">
+        select reportReason,reporting_information.createTime,reportInformation,processStatus,reporting_information.id,username,discuss_post.url,reportIdTo,reportIdFrom,title,content
+        from preschool.user,preschool.discuss_post,preschool.reporting_information
+        where user.id = reporting_information.reportIdFrom and discuss_post.id = reporting_information.reportIdTo and processStatus = #{processStatus}
+    </select>
+
+    <select id="getAllReportingInformationByUserId" resultType="reportingInformationDiscussPost">
+        select reporting_information.*,title,content
+        from preschool.user,preschool.discuss_post,preschool.reporting_information
+        where user.id = reporting_information.reportIdFrom and discuss_post.id = reporting_information.reportIdTo and user.id=#{userId}
+    </select>
+
+    <select id="getAll" resultType="reportingInformation">
+        SELECT r.reportReason,r.reportIdTo,r.id
+        FROM reporting_information r,discuss_post d
+        WHERE r.reportIdTo=d.id AND d.user_id=#{user_id} and r.readed=0
+        ORDER BY r.createTime
+    </select>
+
+   <delete id="clearSomePosts" parameterType="Integer">
+       delete from reporting_information where reportIdTo=#{id}
+   </delete>
+
+</mapper>

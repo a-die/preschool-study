@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.preschool.dao.UserMapper">
+    <select id="queryByPhoneAndPassword" parameterType="String" resultType="user">
+        select * from preschool.user where phonenumber=#{phonenumber} and password=#{password};
+    </select>
+    <insert id="addUser" parameterType="user">
+        insert into preschool.user(password, email, username, type, createTime, birthday, phonenumber, sex, signature, portrait_id,status)
+        VALUES (#{password},#{email},#{username},#{type},#{create_time},#{birthday},#{phonenumber},#{sex},#{signature},#{portrait_id},#{status});
+    </insert>
+    <select id="queryByPhone" resultType="user">
+        select * from preschool.user where phonenumber=#{phonenumber};
+    </select>
+    <select id="queryById" parameterType="int" resultType="user">
+        select * from preschool.user where id=#{id};
+    </select>
+    <update id="updateUser" parameterType="user">
+        update preschool.user set phonenumber=#{phonenumber},password=#{password},email=#{email},username=#{username},birthday=#{birthday},sex=#{sex},signature=#{signature},portrait_id=#{portrait_id},url = #{url},selfIndex = #{selfIndex}
+        where id=#{id};
+    </update>
+    <update id="updateStatus" parameterType="int">
+        update preschool.user set status=1 where id=#{id};
+    </update>
+
+    <select id="getUserNum" resultType="Integer">
+        select count(*) from preschool.user;
+    </select>
+    <select id="queryGroup" resultType="children">
+        SELECT place as name,COUNT(id) AS VALUE FROM preschool.USER
+        GROUP BY place
+    </select>
+</mapper>

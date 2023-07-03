@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.preschool.dao.ReplyMapper">
+   <select id="queryAllById" parameterType="int" resultType="commentReplyUser">
+       select preschool.comment_reply.*,a.username usernameFrom,b.username usernameTo,a.url userUrlFrom,b.url userUrlTo
+       from preschool.comment_reply,preschool.user a,preschool.user b
+       where comment_id=#{comment_id} and user_id_from = a.id and user_id_to = b.id
+       order by create_time asc;
+   </select>
+   <delete id="deleteByCommentId" parameterType="int">
+       delete from preschool.comment_reply where comment_id=#{comment_id};
+   </delete>
+    <select id="queryCountPerMonth" resultType="countpermonth">
+        SELECT DATE_FORMAT(create_time,'%Y-%c') AS date, COUNT(DATE_FORMAT(create_time,'%Y-%c')) AS count FROM preschool.comment_reply GROUP BY DATE_FORMAT(create_time,'%Y-%c');
+    </select>
+</mapper>

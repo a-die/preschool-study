@@ -1,0 +1,582 @@
+<template>
+	<div class="tuopu" style="height: 100vh;">
+	
+	</div>
+</template>
+<script>
+import { ElMessageBox } from 'element-plus'
+	export default {
+		data() {
+			return {
+				chartInstance: null,
+			}
+		},
+		mounted(){
+			this.$store.commit('setHeadFalse');
+			this.draw();
+		},
+		unmounted(){
+			this.$store.commit('setHeadTrue');
+		},
+		methods: {
+			draw() {
+				this.chartInstance = this.$echarts.init(document.getElementsByClassName("tuopu")[0], 'white')
+				let t=this
+				var option = {
+					title: {
+						text: "学科拓扑图",
+						subtext: "不断更新中",
+						top: "top",
+						left: "right",
+						padding:[50,100,30,30],
+						textStyle:{
+							fontSize:'40px',
+						}
+					},
+					tooltip:{
+						formatter:function(arg){
+							return ''+t.chartInstance._model.option.series[0].categories[arg.data.category].name;
+						},
+					},
+					series: [{
+						type: "graph",
+						layout: "none",
+						emphasis: {
+							focus: 'adjacency',
+							label: {
+								position: 'right',
+								show: true
+							}
+						},
+						label: {
+							position: 'bottom',
+							show: true
+						},
+						//节点数据
+						data: [{
+							id: "0",
+							name: "高等数学",
+							symbolSize: 40,
+							x: 0,
+							y: 0,
+							category: 0 //数据项所在类目的 index
+						}, {
+							id: "1",
+							name: "线性代数",
+							symbolSize: 40,
+							x: -2,
+							y: 16,
+							category: 0
+						}, {
+							id: "2",
+							name: "离散数学",
+							symbolSize: 40,
+							x: 0,
+							y: 32,
+							category: 0
+						}, {
+							id: "3",
+							name: "C语言",
+							symbolSize: 32,
+							x: -2,
+							y: 48,
+							category: 0
+						}, {
+							id: "4",
+							name: "大学物理",
+							symbolSize: 40,
+							x: 0,
+							y: 64,
+							category: 4
+						}, {
+							id: "5",
+							name: "电路分析",
+							symbolSize: 40,
+							x: 0,
+							y: 80,
+							category: 4
+						}, {
+							id: "6",
+							symbolSize: 3,
+							x: 20,
+							y: 35,
+							category: 7
+						}, {
+							id: "7",
+							name: "概率论",
+							symbolSize: 40,
+							x: 38,
+							y: 10,
+							category: 0
+						}, {
+							id: "8",
+							name: "Java语言",
+							symbolSize: 40,
+							x: 38,
+							y: 30,
+							category: 0
+						}, {
+							id: "9",
+							name: "数据结构",
+							symbolSize: 48,
+							x: 38,
+							y: 48,
+							category: 0
+						}, {
+							id: "10",
+							symbolSize: 3,
+							x: 50,
+							y: 8,
+							category: 7
+						}, {
+							id: "11",
+							name: "计算机组成原理",
+							symbolSize: 40,
+							x: 65,
+							y: -12,
+							category: 0
+						}, {
+							id: "12",
+							name: "操作系统",
+							symbolSize: 40,
+							x: 65,
+							y: -2,
+							category: 0
+						}, {
+							id: "13",
+							name: "模拟电子技术",
+							symbolSize: 40,
+							x: 36,
+							y: 66,
+							category: 4
+						}, {
+							id: "14",
+							name: "数字电子技术",
+							symbolSize: 40,
+							x: 38,
+							y: 80,
+							category: 4
+						}, {
+							id: "15",
+							name: "计算机网络",
+							symbolSize: 40,
+							x: 65,
+							y: 10,
+							category: 0
+						}, {
+							id: "16",
+							name: "微型计算机原理",
+							symbolSize: 40,
+							x: 65,
+							y: 25,
+							category: 0
+						}, {
+							id: "17",
+							name: "Mysql",
+							symbolSize: 40,
+							x: 64,
+							y: 40,
+							category: 1
+						}, {
+							id: "18",
+							name: "JavaWeb",
+							symbolSize: 40,
+							x: 64,
+							y: 49,
+							category: 1
+						}, {
+							id: "19",
+							name: "算法",
+							symbolSize: 48,
+							x: 64,
+							y: 60,
+							category: 0
+						}, {
+							id: "20",
+							name: "Linux",
+							symbolSize: 40,
+							x: 64,
+							y: 70,
+							category: 0
+						}, {
+							id: "21",
+							symbolSize: 3,
+							x: 50,
+							y: 62,
+							category: 7
+						}, {
+							id: "22",
+							name: "ES6",
+							symbolSize: 40,
+							x: 84,
+							y: 33,
+							category: 2
+						}, {
+							id: "23",
+							name: "axios",
+							symbolSize: 40,
+							x: 95,
+							y: 32,
+							category: 2
+						}, {
+							id: "24",
+							name: "vue",
+							symbolSize: 34,
+							x: 108,
+							y: 31,
+							category: 2
+						}, {
+							id: "25",
+							name: "react",
+							symbolSize: 40,
+							x: 108,
+							y: 41,
+							category: 2
+						}, {
+							id: "26",
+							name: "element-ui",
+							symbolSize: 40,
+							x: 108,
+							y: 23,
+							category: 2
+						}, {
+							id: "27",
+							name: "ssm框架",
+							symbolSize: 40,
+							x: 84,
+							y: 48,
+							category: 3
+						}, {
+							id: "28",
+							name: "springboot",
+							symbolSize: 40,
+							x: 97,
+							y: 54,
+							category: 3
+						}, {
+							id: "29",
+							name: "springcloud",
+							symbolSize: 40,
+							x: 112,
+							y: 53,
+							category: 3
+						}, {
+							id: "30",
+							name: "mybatis-plus",
+							symbolSize: 40,
+							x: 126,
+							y: 53,
+							category: 3
+						}, {
+							id: "31",
+							name: "redis",
+							symbolSize: 40,
+							x: 138,
+							y: 50,
+							category: 3
+						}, {
+							id: "32",
+							name: "Kafka",
+							symbolSize: 40,
+							x: 151,
+							y: 54,
+							category: 3
+						}, {
+							id: "33",
+							name: "RabbitMQ",
+							symbolSize: 40,
+							x: 163,
+							y: 54,
+							category: 3
+						}, {
+							id: "34",
+							name: "单片机",
+							symbolSize: 40,
+							x: 65,
+							y: 82,
+							category: 4
+						}, {
+							id: "35",
+							name: "嵌入式",
+							symbolSize: 40,
+							x: 85,
+							y: 82,
+							category: 4
+						}, {
+							id: "36",
+							name: "通信原理",
+							symbolSize: 40,
+							x: 103,
+							y: 82,
+							category: 4
+						}, {
+							id: "37",
+							name: "网络安全",
+							symbolSize: 40,
+							x: 88,
+							y: 15,
+							category: 6
+						}, {
+							id: "38",
+							symbolSize: 3,
+							x: 84,
+							y: -5,
+							category: 7
+						}, {
+							id: "39",
+							name: "人工智能",
+							symbolSize: 40,
+							x: 118,
+							y: 5,
+							category: 5
+						}, {
+							id: "40",
+							name: "大数据",
+							symbolSize: 40,
+							x: 118,
+							y: -6,
+							category: 5
+						}, {
+							id: "41",
+							name: "云计算",
+							symbolSize: 40,
+							x: 118,
+							y: -15,
+							category: 5
+						},{
+							id: "42",
+							name: "安卓",
+							symbolSize: 42,
+							x: 82,
+							y: 60,
+							category: 2
+						}],
+						links: [{
+							source: "0",
+							target: "6"
+						}, {
+							source: "1",
+							target: "6"
+						}, {
+							source: "2",
+							target: "6"
+						}, {
+							source: "3",
+							target: "6"
+						}, {
+							source: "6",
+							target: "7"
+						}, {
+							source: "6",
+							target: "8"
+						}, {
+							source: "6",
+							target: "9"
+						}, {
+							source: "4",
+							target: "6"
+						}, {
+							source: "5",
+							target: "6"
+						}, {
+							source: "4",
+							target: "13"
+						}, {
+							source: "4",
+							target: "14"
+						}, {
+							source: "5",
+							target: "13"
+						}, {
+							source: "5",
+							target: "14"
+						}, {
+							source: "10",
+							target: "7"
+						}, {
+							source: "10",
+							target: "8"
+						}, {
+							source: "10",
+							target: "9"
+						}, {
+							source: "10",
+							target: "11"
+						}, {
+							source: "10",
+							target: "12"
+						}, {
+							source: "10",
+							target: "15"
+						}, {
+							source: "10",
+							target: "16"
+						}, {
+							source: "8",
+							target: "17"
+						}, {
+							source: "8",
+							target: "18"
+						}, {
+							source: "9",
+							target: "17"
+						}, {
+							source: "9",
+							target: "18"
+						}, {
+							source: "8",
+							target: "21"
+						}, {
+							source: "9",
+							target: "21"
+						}, {
+							source: "13",
+							target: "21"
+						}, {
+							source: "14",
+							target: "21"
+						}, {
+							source: "21",
+							target: "19"
+						}, {
+							source: "21",
+							target: "20"
+						}, {
+							source: "18",
+							target: "22"
+						}, {
+							source: "22",
+							target: "23"
+						}, {
+							source: "23",
+							target: "24"
+						}, {
+							source: "23",
+							target: "25"
+						}, {
+							source: "23",
+							target: "26"
+						}, {
+							source: "17",
+							target: "27"
+						}, {
+							source: "18",
+							target: "27"
+						}, {
+							source: "28",
+							target: "29"
+						}, {
+							source: "27",
+							target: "28"
+						}, {
+							source: "29",
+							target: "30"
+						}, {
+							source: "30",
+							target: "31"
+						}, {
+							source: "31",
+							target: "32"
+						}, {
+							source: "32",
+							target: "33"
+						}, {
+							source: "14",
+							target: "34"
+						}, {
+							source: "34",
+							target: "35"
+						}, {
+							source: "35",
+							target: "36"
+						}, {
+							source: "15",
+							target: "37"
+						}, {
+							source: "16",
+							target: "37"
+						}, {
+							source: "11",
+							target: "38"
+						}, {
+							source: "12",
+							target: "38"
+						}, {
+							source: "15",
+							target: "38"
+						}, {
+							source: "16",
+							target: "38"
+						}, {
+							source: "38",
+							target: "39"
+						}, {
+							source: "38",
+							target: "40"
+						}, {
+							source: "38",
+							target: "41"
+						},{
+							source: "18",
+							target: "42"
+						}],
+						categories: [{
+							name: "必修知识"
+						}, {
+							name: "软件先修知识"
+						}, {
+							name: "前端技术"
+						}, {
+							name: "后端技术"
+						}, {
+							name: "硬件知识"
+						}, {
+							name: "大数据知识"
+						}, {
+							name: "网络安全知识"
+						}, {
+							name: "连接点"
+						}],
+						lineStyle: {
+									color: "rgba(214, 213, 213, 1)"
+						},
+						color:["#8b8f9f","#efd3d7","#cbc0d3","#feeafa","#89c2d9","#bde0fe","#accbe1"],
+						symbol: "image://data:image/png;base64,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"
+	
+					}]
+				}
+				this.chartInstance.setOption(option)
+				let that = this;
+				this.chartInstance.on("click", function (chartParam){ 
+					if(chartParam.dataType=='node'){
+						if(chartParam.data.name==null){
+							ElMessageBox.alert('点击无效哦','提示消息')
+							.catch(() => {
+								// catch error
+							})
+						}else{
+							that.$store.state.type=0;
+							that.$store.state.subjectIndex=chartParam.data.id;
+							that.$router.push({name: 'home',params: {type: 0,subject: chartParam.data.id}})
+						}
+					}
+					if(chartParam.dataType=='edge'){
+						ElMessageBox.alert('点击无效哦','提示消息')
+						.catch(() => {
+							// catch error
+						})
+					}
+				});
+			}
+		}
+	}
+</script>
+
+<style scoped>
+	div {
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
+		background: linear-gradient(-225deg,#c1edff,#daf0fc,#ffffff,white);
+	}
+</style>

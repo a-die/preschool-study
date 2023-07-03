@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.preschool.dao.CommentMapper">
+    <insert id="addComment" parameterType="comment">
+        insert into preschool.comment (userIdFrom,content,create_time,discussPostId) values (#{userIdFrom},#{content},#{createTime},#{discussPostId});
+    </insert>
+    <select id="queryAllById" parameterType="int" resultType="commentUser">
+        select preschool.comment.*,username,url
+        from preschool.comment,preschool.user
+        where discussPostId=#{discussPostId} and userIdFrom = user.id
+        order by createTime asc;
+    </select>
+    <select id="queryById" parameterType="int" resultType="comment">
+        select * from preschool.comment where id=#{id};
+    </select>
+    <select id="getCommentNum" resultType="int">
+        select count(*) from preschool.comment
+    </select>
+    <select id="ShowAllCommentsByPage" resultType="java.util.Map">
+        select username,comment.content,comment.create_time,comment.id,discuss_post.content content1,title
+        from preschool.comment,preschool.user,preschool.discuss_post
+        where comment.userIdFrom = user.id and discuss_post.id = comment.discussPostId
+    </select>
+
+    <select id="showCommentsByUsername" resultType="java.util.Map">
+        select username,comment.content,comment.create_time,comment.id,discuss_post.content content1,title
+        from preschool.comment,preschool.user,preschool.discuss_post
+        where comment.userIdFrom = user.id and discuss_post.id = comment.id and username like concat('%',#{username},'%')
+    </select>
+
+    <select id="queryCountPerMonth" resultType="countpermonth">
+        SELECT DATE_FORMAT(create_time,'%Y-%c') AS date, COUNT(DATE_FORMAT(create_time,'%Y-%c')) AS count FROM preschool.comment GROUP BY DATE_FORMAT(create_time,'%Y-%c');
+    </select>
+
+    <select id="getCommentNumByDiscussPostId" resultType="Integer" parameterType="Integer">
+        select count(*)
+        from preschool.comment
+        where discussPostId = #{discussPostId}
+    </select>
+</mapper>

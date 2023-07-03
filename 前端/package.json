@@ -1,0 +1,31 @@
+{
+  "name": "javaee",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve --port=8082",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "@kangc/v-md-editor": "^2.3.12",
+    "axios": "^0.24.0",
+    "babel-plugin-prismjs": "^2.1.0",
+    "core-js": "^3.6.5",
+    "echarts": "^5.2.2",
+    "element-plus": "^1.2.0-beta.1",
+    "jquery": "^3.6.0",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "less": "^3.0.4",
+    "less-loader": "^5.0.0",
+    "qs": "^6.10.1"
+  }
+}

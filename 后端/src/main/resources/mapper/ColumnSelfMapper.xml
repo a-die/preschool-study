@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.preschool.dao.ColumnSelfMapper">
+    <select id="queryByUserId" parameterType="int" resultType="columnSelf">
+        select * from preschool.column_self where user_id=#{user_id};
+    </select>
+    <select id="queryByColumnId" parameterType="int" resultType="discussPost">
+        select * from preschool.discuss_post where column_id=#{column_id};
+    </select>
+</mapper>

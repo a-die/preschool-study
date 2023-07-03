@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.preschool.dao.OrdersMapper">
+
+    <select id="OrdersDiscussPostUser" resultType="ordersDiscussPostUser">
+        select orders.*,username,title
+        from preschool.orders,preschool.user,preschool.discuss_post
+        where orders.userId = user.id and orders.discussPostId = discuss_post.id
+    </select>
+
+    <select id="getOrdersByUserId" resultType="ordersDiscussPostUser">
+        select orders.*,username,title,discuss_post.id discussPostId
+        from preschool.orders,preschool.user,preschool.discuss_post
+        where orders.userId = user.id and orders.discussPostId = discuss_post.id and userId = #{userId}
+    </select>
+
+    <select id="getAll" resultType="orders">
+        SELECT o.discussPostId,o.id
+        FROM orders o,discuss_post d
+        WHERE o.discussPostId=d.id AND d.user_id=#{user_id} and o.readed=0
+        ORDER BY o.createTime
+    </select>
+
+    <delete id="clearSomePosts" parameterType="Integer">
+        delete from orders where discussPostId=#{id}
+    </delete>
+</mapper>
